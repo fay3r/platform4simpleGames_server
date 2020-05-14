@@ -1,6 +1,5 @@
 package org.project.rest;
 
-import org.project.domain.dto.user.FPChangeData;
 import org.project.domain.dto.user.LogginData;
 import org.project.domain.dto.user.ChangePasswordDto;
 import org.project.domain.dto.user.AccountData;
@@ -47,7 +46,7 @@ public class Controller {
 
     @CrossOrigin
     @PutMapping(value = "/user/forgetPasswordChange")
-    public ResponseEntity forgetPasswordChange(@RequestBody FPChangeData fpChangeData){
+    public ResponseEntity forgetPasswordChange(@RequestBody LogginData fpChangeData){
         return loggingService.fpChange(fpChangeData) ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity("Bad answer",HttpStatus.FORBIDDEN);
     }
 

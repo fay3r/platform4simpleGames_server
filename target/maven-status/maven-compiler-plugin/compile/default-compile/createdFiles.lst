@@ -1,5 +1,4 @@
 org\project\Application.class
-org\project\domain\dto\user\FPChangeData.class
 org\project\domain\dto\user\ChangePasswordDto.class
 org\project\domain\dto\user\UserBase.class
 org\project\service\impl\LoggingServiceImpl.class

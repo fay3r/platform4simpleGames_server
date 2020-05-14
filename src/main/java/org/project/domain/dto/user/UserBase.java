@@ -2,6 +2,8 @@ package org.project.domain.dto.user;
 
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 
 @Repository
@@ -33,6 +35,16 @@ public class UserBase {
             }
         }
         return null;
+    }
+
+    public Boolean changePassword(AccountData accountNewData){
+        for(int i =0 ; i<platformBase.size();i++){
+            if(platformBase.get(i).getNick().equals(accountNewData.getNick())){
+                platformBase.set(i,accountNewData);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

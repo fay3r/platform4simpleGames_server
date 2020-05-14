@@ -56,10 +56,10 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public boolean fpChange(FPChangeData fpChangeData) {
-       String tempAnswer = administrator.getAnswer();
-        if(tempAnswer.equals(fpChangeData.getAnswer())){
-            administrator.setPassword(fpChangeData.getNewPassword());
+    public boolean fpChange(LogginData fpChangeData) {
+        currentUser = baseOfUsers.findUser(fpChangeData.getNick());
+        currentUser.setPassword(fpChangeData.getPassword());
+        if(baseOfUsers.changePassword(currentUser)){
             return true;
         }
         return false;
