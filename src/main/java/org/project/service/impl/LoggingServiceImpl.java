@@ -11,9 +11,6 @@ import java.util.Map;
 @Service
 public class LoggingServiceImpl implements LoggingService {
 
-
-    private AccountData administrator = new AccountData();
-
     @Autowired
     private UserBase baseOfUsers;
     @Autowired
@@ -22,7 +19,6 @@ public class LoggingServiceImpl implements LoggingService {
     @Override
     public boolean register(AccountData data) {
         System.out.println(baseOfUsers.toString());
-        //baseOfUsers.add(administrator);
         if(baseOfUsers.findUser(data.getNick())==null)
         {
             baseOfUsers.add(data);
@@ -33,7 +29,6 @@ public class LoggingServiceImpl implements LoggingService {
 
     @Override
     public boolean logging(LogginData data) {
-       // baseOfUsers.add(administrator);
         currentUser=baseOfUsers.findUser(data.getNick());
         if(currentUser!=null) {
             if(currentUser.getPassword().equals(data.getPassword())){
@@ -56,20 +51,17 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public boolean fpChange(LogginData fpChangeData) {
+    public void fpChange(LogginData fpChangeData) {
         currentUser = baseOfUsers.findUser(fpChangeData.getNick());
         currentUser.setPassword(fpChangeData.getPassword());
-        if(baseOfUsers.changePassword(currentUser)){
-            return true;
-        }
-        return false;
+        baseOfUsers.updateData(currentUser,"password");
     }
 
     @Override
     public boolean userChangingPassword(ChangePasswordDto changePasswordDto) {
-        if(changePasswordDto.getNick().equals(administrator.getNick())){
-            if(changePasswordDto.getPassword().equals(administrator.getPassword())){
-                administrator.setPassword(changePasswordDto.getNewPassword());
+        if(changePasswordDto.getNick().equals(baseOfUsers.findUser(changePasswordDto.getNick()).getNick())){
+            if(changePasswordDto.getPassword().equals(baseOfUsers.findUser((changePasswordDto.getPassword())).getPassword())){
+                baseOfUsers.updateData(new AccountData(changePasswordDto.getNick(),changePasswordDto.getNewPassword(),null,null),"password");
                 return true;
             }
         }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/platform-server")
+@RequestMapping("/platform-server/user")
 public class Controller {
     private static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
 
@@ -22,22 +22,22 @@ public class Controller {
     LoggingService loggingService;
 
     @CrossOrigin
-    @PostMapping(value = "/user/registerUser")
+    @PostMapping(value = "/registerUser")
     public ResponseEntity registerUser(@RequestBody AccountData accountData){
 
 
-        return loggingService.register(accountData) ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity("login already taken",HttpStatus.FORBIDDEN);
+        return loggingService.register(accountData) ? new ResponseEntity(true,HttpStatus.OK) : new ResponseEntity(HttpStatus.FORBIDDEN);
     }
 
     @CrossOrigin
-    @PutMapping(value = "/user/loginUser")
+    @PutMapping(value = "/loginUser")
     public ResponseEntity loginUser(@RequestBody LogginData logginData){
 
-        return loggingService.logging(logginData) ? new ResponseEntity(HttpStatus.OK): new ResponseEntity("bad login or password",HttpStatus.FORBIDDEN) ;
+        return loggingService.logging(logginData) ? new ResponseEntity(true,HttpStatus.OK): new ResponseEntity("bad login or password",HttpStatus.FORBIDDEN) ;
     }
 
     @CrossOrigin
-    @PutMapping(value = "/user/forgetPasswordIsUser/{nick}")
+    @PutMapping(value = "/forgetPasswordIsUser/{nick}")
     public ResponseEntity forgetPasswordIsUser(@PathVariable String nick){
 
         Map<String,String> message = loggingService.isUser(nick);
@@ -45,13 +45,14 @@ public class Controller {
     }
 
     @CrossOrigin
-    @PutMapping(value = "/user/forgetPasswordChange")
+    @PutMapping(value = "/forgetPasswordChange")
     public ResponseEntity forgetPasswordChange(@RequestBody LogginData fpChangeData){
-        return loggingService.fpChange(fpChangeData) ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity("Bad answer",HttpStatus.FORBIDDEN);
+        loggingService.fpChange(fpChangeData);
+        return  new ResponseEntity(true,HttpStatus.OK);
     }
 
     @CrossOrigin
-    @PutMapping(value = "/user/changePassword")
+    @PutMapping(value = "/changePassword")
     public ResponseEntity changePassword(@RequestBody ChangePasswordDto changePasswordDto){
         return loggingService.userChangingPassword(changePasswordDto) ? new ResponseEntity(HttpStatus.OK):new ResponseEntity("Bad password",HttpStatus.FORBIDDEN);
     }

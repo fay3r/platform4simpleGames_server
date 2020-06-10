@@ -11,6 +11,6 @@ public interface LoggingService {
     boolean register(AccountData data);
     boolean logging(LogginData data);
     Map<String,String> isUser(String nick);
-    boolean fpChange(LogginData fpChangeData);
+    void fpChange(LogginData fpChangeData);
     boolean userChangingPassword(ChangePasswordDto changePasswordDto);
 }
