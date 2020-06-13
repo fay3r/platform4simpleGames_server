@@ -1,11 +1,13 @@
 package org.project.service.impl;
 
-import org.project.domain.dto.user.*;
+import org.project.domain.classes.user.*;
 import org.project.service.LoggingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -66,6 +68,22 @@ public class LoggingServiceImpl implements LoggingService {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<String> getLogins() {
+        ArrayList<AccountData> users = baseOfUsers.getPlatformBase();
+        List<String> logins = new ArrayList<>();
+        for(AccountData temp:users){
+            logins.add(temp.getNick());
+            System.out.println(temp.getNick());
+        }
+        return logins;
+    }
+
+    @Override
+    public void deletePlayer(String nick) {
+        baseOfUsers.deleteUser(nick);
     }
 
 

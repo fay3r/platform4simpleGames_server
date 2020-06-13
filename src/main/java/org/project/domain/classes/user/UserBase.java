@@ -1,4 +1,4 @@
-package org.project.domain.dto.user;
+package org.project.domain.classes.user;
 
 import org.springframework.stereotype.Repository;
 
@@ -79,6 +79,7 @@ public class UserBase {
     public void downloadBase(){
         Connection c = null;
         Statement stmt = null;
+        platformBase = new ArrayList<>();
         try {
             Class.forName("org.postgresql.Driver");
             c = DriverManager
@@ -98,11 +99,6 @@ public class UserBase {
                 Integer sqlTTTL = rs.getInt("tttgamelost");
                 Integer sqlBSW = rs.getInt("bsgamewon");
                 Integer sqlBSL = rs.getInt("bsgamelost");
-                System.out.println( "ID = " + sqlNick );
-                System.out.println( "NAME = " + sqlPassword );
-                System.out.println( "AGE = " + sqlQuestion );
-                System.out.println( "ADDRESS = " + sqlAnswer );
-                System.out.println();
                 platformBase.add(new AccountData(sqlNick,sqlPassword,sqlQuestion,sqlAnswer,sqlTTTW,sqlTTTL,sqlBSW,sqlBSL));
             }
             rs.close();
@@ -175,4 +171,33 @@ public class UserBase {
         downloadBase();
     }
 
+    public void deleteUser(String nick) {
+        if (!nick.equals("administrator")) {
+            Connection c = null;
+            Statement stmt = null;
+            try {
+                Class.forName("org.postgresql.Driver");
+                c = DriverManager
+                        .getConnection("jdbc:postgresql://rogue.db.elephantsql.com:5432/ezstzdga",
+                                "ezstzdga", "o6zkA0o8vitrVts8Z37XcUEY1v9Z61rw");
+                c.setAutoCommit(false);
+                System.out.println("Opened database successfully");
+
+                stmt = c.createStatement();
+                String sql = "DELETE from public.users where nick = '"+ nick+"'";
+                System.out.println(sql);
+                stmt.executeUpdate(sql);
+                c.commit();
+                stmt.close();
+                c.close();
+            } catch (Exception e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                System.exit(0);
+            }
+            System.out.println("Operation done successfully");
+        }
+        downloadBase();
+    }
 }
+
+

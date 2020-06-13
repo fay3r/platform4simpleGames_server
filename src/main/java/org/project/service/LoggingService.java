@@ -1,10 +1,11 @@
 package org.project.service;
 
-import org.project.domain.dto.user.ChangePasswordDto;
+import org.project.domain.classes.user.ChangePasswordDto;
 
-import org.project.domain.dto.user.LogginData;
-import org.project.domain.dto.user.AccountData;
+import org.project.domain.classes.user.LogginData;
+import org.project.domain.classes.user.AccountData;
 
+import java.util.List;
 import java.util.Map;
 
 public interface LoggingService {
@@ -13,4 +14,7 @@ public interface LoggingService {
     Map<String,String> isUser(String nick);
     void fpChange(LogginData fpChangeData);
     boolean userChangingPassword(ChangePasswordDto changePasswordDto);
+    List<String> getLogins();
+
+    void deletePlayer(String nick);
 }

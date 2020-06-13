@@ -1,4 +1,4 @@
-package org.project.domain.dto.user;
+package org.project.domain.classes.user;
 
 import lombok.NoArgsConstructor;
 
