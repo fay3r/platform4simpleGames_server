@@ -5,10 +5,7 @@ import org.project.service.LoggingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class LoggingServiceImpl implements LoggingService {
@@ -18,9 +15,11 @@ public class LoggingServiceImpl implements LoggingService {
     @Autowired
     private AccountData currentUser;
 
+    private LinkedList<ChatMessage> messageHistory = new LinkedList<>();
+
     @Override
     public boolean register(AccountData data) {
-        System.out.println(baseOfUsers.toString());
+        System.out.println(data.toString());
         if(baseOfUsers.findUser(data.getNick())==null)
         {
             baseOfUsers.add(data);
@@ -61,8 +60,9 @@ public class LoggingServiceImpl implements LoggingService {
 
     @Override
     public boolean userChangingPassword(ChangePasswordDto changePasswordDto) {
+        System.out.println(changePasswordDto.getNick()+changePasswordDto.getNewPassword()+changePasswordDto.getPassword());
         if(changePasswordDto.getNick().equals(baseOfUsers.findUser(changePasswordDto.getNick()).getNick())){
-            if(changePasswordDto.getPassword().equals(baseOfUsers.findUser((changePasswordDto.getPassword())).getPassword())){
+            if(changePasswordDto.getPassword().equals(baseOfUsers.findUser((changePasswordDto.getNick())).getPassword())){
                 baseOfUsers.updateData(new AccountData(changePasswordDto.getNick(),changePasswordDto.getNewPassword(),null,null),"password");
                 return true;
             }
@@ -86,5 +86,38 @@ public class LoggingServiceImpl implements LoggingService {
         baseOfUsers.deleteUser(nick);
     }
 
+    @Override
+    public List<AccountScoresDto> sendScores() {
+        List<AccountScoresDto> scoresTable = new ArrayList<>();
+        ArrayList<AccountData> users = baseOfUsers.getPlatformBase();
+        for(AccountData temp:users){
+            if(!temp.getNick().equals("administrator")) {
+                scoresTable.add(new AccountScoresDto(temp.getNick(), temp.tttGamesWon, temp.shipsGamesWon, temp.tttGamesLost, temp.shipsGamesLost, 0, 0));
+                System.out.println(temp.getNick());
+            }
+        }
+        return scoresTable;
+    }
+
+    @Override
+    public void resetPlayerStats(String nick) {
+        baseOfUsers.updateData(baseOfUsers.findUser(nick),"reset");
+    }
+
+    @Override
+    public void saveNewMessage(ChatMessage newMessage){
+        if(messageHistory.size()==15){
+            messageHistory.remove(0);
+        }
+        messageHistory.add(newMessage);
+        for (ChatMessage thisOne : messageHistory) {
+            System.out.println("wiadomosc"+ thisOne.toString());
+        }
+    }
+
+    @Override
+    public LinkedList sendMsgToClient(){
+        return messageHistory;
+    }
 
 }

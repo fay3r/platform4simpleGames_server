@@ -114,5 +114,19 @@ public class AccountData implements Serializable {
         }
         System.out.println("Operation done successfully");
     }
+
+    @Override
+    public String toString() {
+        return "AccountData{" +
+                "nick='" + nick + '\'' +
+                ", password='" + password + '\'' +
+                ", question='" + question + '\'' +
+                ", answer='" + answer + '\'' +
+                ", tttGamesWon=" + tttGamesWon +
+                ", shipsGamesWon=" + shipsGamesWon +
+                ", tttGamesLost=" + tttGamesLost +
+                ", shipsGamesLost=" + shipsGamesLost +
+                '}';
+    }
 }
 

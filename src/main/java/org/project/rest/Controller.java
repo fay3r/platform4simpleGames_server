@@ -1,5 +1,6 @@
 package org.project.rest;
 
+import org.project.domain.classes.user.ChatMessage;
 import org.project.domain.classes.user.LogginData;
 import org.project.domain.classes.user.ChangePasswordDto;
 import org.project.domain.classes.user.AccountData;
@@ -55,6 +56,7 @@ public class Controller {
     @CrossOrigin
     @PutMapping(value = "/changePassword")
     public ResponseEntity changePassword(@RequestBody ChangePasswordDto changePasswordDto){
+        System.out.println("########################################################################################");
         return loggingService.userChangingPassword(changePasswordDto) ? new ResponseEntity(HttpStatus.OK):new ResponseEntity("Bad password",HttpStatus.FORBIDDEN);
     }
 
@@ -72,5 +74,31 @@ public class Controller {
         return new ResponseEntity(true,HttpStatus.OK);
     }
 
+    @CrossOrigin
+    @GetMapping(value = "/getScoreTable")
+    public ResponseEntity getScoreTable(){
+        return new ResponseEntity(loggingService.sendScores(),HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @PutMapping(value = "/resetScore/{nick}")
+    public ResponseEntity getScoreTable(@PathVariable String nick){
+        loggingService.resetPlayerStats(nick);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @PutMapping(value = "/sendMessage")
+    public ResponseEntity sendMessage(@RequestBody ChatMessage chatMessage){
+        System.out.println("w controllerze"+chatMessage.toString());
+        loggingService.saveNewMessage(chatMessage);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/getChatMessages")
+    public ResponseEntity getChatMessages(){
+        return new ResponseEntity(loggingService.sendMsgToClient(),HttpStatus.OK);
+    }
 
 }

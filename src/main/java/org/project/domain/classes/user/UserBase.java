@@ -12,11 +12,11 @@ import java.util.ArrayList;
 
 
 @Repository
-
 public class UserBase {
-    private ArrayList<AccountData> platformBase = new ArrayList<>();
+    private ArrayList<AccountData> platformBase;
 
     public UserBase() {
+        platformBase = new ArrayList<>();
         downloadBase();
     }
 
@@ -131,7 +131,7 @@ public class UserBase {
                     stmt.executeUpdate(sql);
                     c.commit();
                     break;
-                case "restart":
+                case "reset":
                     sql = "UPDATE public.users set tttgamewon = 0 where nick LIKE '"+ newAD.getNick()+"'";
                     stmt.executeUpdate(sql);
                     c.commit();
@@ -147,16 +147,16 @@ public class UserBase {
 
                     break;
                 case "stats":
-                    sql = "UPDATE public.users set tttgamewon = "+ newAD.tttGamesWon+" where nick LIKE "+ newAD.getNick();
+                    sql = "UPDATE public.users set tttgamewon = "+ newAD.tttGamesWon+" where nick LIKE '"+ newAD.getNick()+"'";
                     stmt.executeUpdate(sql);
                     c.commit();
-                    sql = "UPDATE public.users set tttgamelost = "+ newAD.tttGamesLost+" where nick LIKE "+ newAD.getNick();
+                    sql = "UPDATE public.users set tttgamelost = "+ newAD.tttGamesLost+" where nick LIKE '"+ newAD.getNick()+"'";
                     stmt.executeUpdate(sql);
                     c.commit();
-                    sql = "UPDATE public.users set bsgamewon = "+ newAD.shipsGamesWon+" where nick LIKE "+ newAD.getNick();
+                    sql = "UPDATE public.users set bsgamewon = "+ newAD.shipsGamesWon+" where nick LIKE '"+ newAD.getNick()+"'";
                     stmt.executeUpdate(sql);
                     c.commit();
-                    sql = "UPDATE public.users set bsgamelost = "+ newAD.shipsGamesLost+" where nick LIKE "+ newAD.getNick();
+                    sql = "UPDATE public.users set bsgamelost = "+ newAD.shipsGamesLost+" where nick LIKE '"+ newAD.getNick()+"'";
                     stmt.executeUpdate(sql);
                     c.commit();
                     break;

@@ -4,8 +4,9 @@ org\project\Application.class
 org\project\rest\TTTApiController.class
 org\project\service\impl\TTTGameServiceImpl.class
 org\project\domain\classes\user\ChangePasswordDto.class
-org\project\domain\classes\user\AccountScores.class
+org\project\domain\classes\user\ChatMessage.class
 org\project\service\LoggingService.class
+org\project\domain\classes\user\AccountScoresDto.class
 org\project\domain\classes\tictactoe\UserMoveDto.class
 org\project\rest\Controller.class
 org\project\domain\classes\user\LogginData.class

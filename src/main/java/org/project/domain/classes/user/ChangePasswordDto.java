@@ -1,6 +1,11 @@
 package org.project.domain.classes.user;
 
-public class ChangePasswordDto {
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
+@NoArgsConstructor
+public class ChangePasswordDto implements Serializable {
     private String nick;
     private String password;
     private String newPassword;
