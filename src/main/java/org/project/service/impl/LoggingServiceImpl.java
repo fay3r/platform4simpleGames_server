@@ -120,4 +120,8 @@ public class LoggingServiceImpl implements LoggingService {
         return messageHistory;
     }
 
+    @Override
+    public void clearChatHistory(){
+        messageHistory.clear();
+    }
 }

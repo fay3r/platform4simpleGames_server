@@ -101,4 +101,11 @@ public class Controller {
         return new ResponseEntity(loggingService.sendMsgToClient(),HttpStatus.OK);
     }
 
+    @CrossOrigin
+    @DeleteMapping(value = "/clearChat")
+    public ResponseEntity clearChat(){
+        loggingService.clearChatHistory();
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 }

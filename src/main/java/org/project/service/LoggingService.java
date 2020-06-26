@@ -21,4 +21,5 @@ public interface LoggingService {
 
     void saveNewMessage(ChatMessage newMessage);
     LinkedList sendMsgToClient();
+    void clearChatHistory();
 }
