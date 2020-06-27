@@ -92,7 +92,7 @@ public class LoggingServiceImpl implements LoggingService {
         ArrayList<AccountData> users = baseOfUsers.getPlatformBase();
         for(AccountData temp:users){
             if(!temp.getNick().equals("administrator")) {
-                scoresTable.add(new AccountScoresDto(temp.getNick(), temp.tttGamesWon, temp.shipsGamesWon, temp.tttGamesLost, temp.shipsGamesLost, 0, 0));
+                scoresTable.add(new AccountScoresDto(temp.getNick(), temp.tttGamesWon, temp.shipsGamesWon, temp.tttGamesLost, temp.shipsGamesLost, temp.rpsGamesWon, temp.rpsGamesLost));
                 System.out.println(temp.getNick());
             }
         }
@@ -102,6 +102,33 @@ public class LoggingServiceImpl implements LoggingService {
     @Override
     public void resetPlayerStats(String nick) {
         baseOfUsers.updateData(baseOfUsers.findUser(nick),"reset");
+    }
+
+    @Override
+    public void updatePlayerStats(String nick, String whatHappened){
+        AccountData temp = baseOfUsers.findUser(nick);
+        switch(whatHappened)
+        {
+            case "tttwon":
+                temp.tttWon();
+                break;
+            case "tttlost":
+                temp.tttLost();
+                break;
+            case "shipswon":
+                temp.shipsWon();
+                break;
+            case "shipslost":
+                temp.shipsLost();
+                break;
+            case "rpswon":
+                temp.rpsWon();
+                break;
+            case "rpslost":
+                temp.rpsLost();
+                break;
+        }
+        baseOfUsers.updateData(temp,"stats");
     }
 
     @Override

@@ -17,6 +17,8 @@ public class AccountData implements Serializable {
     public Integer shipsGamesWon;
     public Integer tttGamesLost;
     public Integer shipsGamesLost;
+    public Integer rpsGamesWon;
+    public Integer rpsGamesLost;
 
     public AccountData(){
         this.nick=null;
@@ -35,10 +37,12 @@ public class AccountData implements Serializable {
         this.tttGamesLost = 0;
         this.shipsGamesWon = 0;
         this.shipsGamesLost = 0;
+        this.rpsGamesLost=0;
+        this.rpsGamesWon=0;
     }
 
     // konstruktor do tworzenia bazy z Postgresa
-    public AccountData(String nick, String password, String question, String answer,Integer tTTW , Integer tTTL ,Integer bSW ,Integer bSL) {
+    public AccountData(String nick, String password, String question, String answer,Integer tTTW , Integer tTTL ,Integer bSW ,Integer bSL,Integer rpsW, Integer rpsL) {
         this.nick = nick;
         this.password = password;
         this.question = question;
@@ -47,6 +51,8 @@ public class AccountData implements Serializable {
         this.tttGamesLost = tTTL;
         this.shipsGamesWon = bSW;
         this.shipsGamesLost = bSL;
+        this.rpsGamesWon = rpsW;
+        this.rpsGamesLost = rpsL;
     }
 
     public String getNick() {
@@ -80,6 +86,30 @@ public class AccountData implements Serializable {
     public void isTTTGameLost() { this.tttGamesLost++; }
 
     public void isShipsGameLost() { this.shipsGamesLost++; }
+
+    public void tttWon() {
+        this.tttGamesWon++;
+    }
+
+    public void shipsWon() {
+        this.shipsGamesWon++;
+    }
+
+    public void tttLost() {
+        this.tttGamesLost++;
+    }
+
+    public void shipsLost() {
+        this.shipsGamesLost++;
+    }
+
+    public void rpsWon() {
+        this.rpsGamesWon++;
+    }
+
+    public void rpsLost() {
+        this.rpsGamesLost++;
+    }
 
     public void findUser(String appNick){
         Connection c = null;
@@ -126,6 +156,8 @@ public class AccountData implements Serializable {
                 ", shipsGamesWon=" + shipsGamesWon +
                 ", tttGamesLost=" + tttGamesLost +
                 ", shipsGamesLost=" + shipsGamesLost +
+                ", rpsGamesWon=" + rpsGamesWon +
+                ", rpsGamesLost=" + rpsGamesLost +
                 '}';
     }
 }

@@ -99,7 +99,9 @@ public class UserBase {
                 Integer sqlTTTL = rs.getInt("tttgamelost");
                 Integer sqlBSW = rs.getInt("bsgamewon");
                 Integer sqlBSL = rs.getInt("bsgamelost");
-                platformBase.add(new AccountData(sqlNick,sqlPassword,sqlQuestion,sqlAnswer,sqlTTTW,sqlTTTL,sqlBSW,sqlBSL));
+                Integer sqlRSPW = rs.getInt("rspgamewon");
+                Integer sqlRSPL = rs.getInt("rspgamelost");
+                platformBase.add(new AccountData(sqlNick,sqlPassword,sqlQuestion,sqlAnswer,sqlTTTW,sqlTTTL,sqlBSW,sqlBSL,sqlRSPW,sqlRSPL));
             }
             rs.close();
             stmt.close();
@@ -144,6 +146,12 @@ public class UserBase {
                     sql = "UPDATE public.users set bsgamelost = 0 where nick LIKE '"+ newAD.getNick()+"'";
                     stmt.executeUpdate(sql);
                     c.commit();
+                    sql = "UPDATE public.users set rspgamewon = 0 where nick LIKE '"+ newAD.getNick()+"'";
+                    stmt.executeUpdate(sql);
+                    c.commit();
+                    sql = "UPDATE public.users set rspgamelost = 0 where nick LIKE '"+ newAD.getNick()+"'";
+                    stmt.executeUpdate(sql);
+                    c.commit();
 
                     break;
                 case "stats":
@@ -157,6 +165,12 @@ public class UserBase {
                     stmt.executeUpdate(sql);
                     c.commit();
                     sql = "UPDATE public.users set bsgamelost = "+ newAD.shipsGamesLost+" where nick LIKE '"+ newAD.getNick()+"'";
+                    stmt.executeUpdate(sql);
+                    c.commit();
+                    sql = "UPDATE public.users set rspgamewon = "+ newAD.rpsGamesWon+" where nick LIKE '"+ newAD.getNick()+"'";
+                    stmt.executeUpdate(sql);
+                    c.commit();
+                    sql = "UPDATE public.users set rspgamelost = "+ newAD.rpsGamesLost+" where nick LIKE '"+ newAD.getNick()+"'";
                     stmt.executeUpdate(sql);
                     c.commit();
                     break;

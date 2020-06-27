@@ -88,6 +88,13 @@ public class Controller {
     }
 
     @CrossOrigin
+    @PutMapping(value = "/updateStats")
+    public ResponseEntity updateStats(@RequestBody Map<String,String> data){
+        loggingService.updatePlayerStats(data.get("nick"),data.get("operation"));
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @CrossOrigin
     @PutMapping(value = "/sendMessage")
     public ResponseEntity sendMessage(@RequestBody ChatMessage chatMessage){
         System.out.println("w controllerze"+chatMessage.toString());

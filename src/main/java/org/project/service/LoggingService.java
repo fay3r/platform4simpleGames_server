@@ -18,6 +18,7 @@ public interface LoggingService {
 
     List<AccountScoresDto> sendScores();
     void resetPlayerStats (String nick);
+    void updatePlayerStats(String nick, String whatHappened);
 
     void saveNewMessage(ChatMessage newMessage);
     LinkedList sendMsgToClient();
